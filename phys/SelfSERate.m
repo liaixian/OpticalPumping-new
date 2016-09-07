@@ -9,7 +9,7 @@ function rate = SelfSERate( atom, condition )
     cross_section = atom.SE_cross_section;
     density = condition.density;
     
-    se = density*thermal_v*cross_section * 1e-6;
+    se = density*thermal_v*cross_section * 2*pi*1e-6; %%%
     rate.damping = se;
     rate.exchange = se;
 end

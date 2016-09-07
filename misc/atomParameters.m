@@ -54,4 +54,8 @@ function atom=atomParameters(iso)
     atom.pumpR=(-1)^(atom.qn.J-atom.qn.S)/atom.sw.gJ;
     
     atom.SE_cross_section = 1.9e-14; % cm^(-2) S. J. Seltzer thesis
+    atom.SD_self_cross_section = 1.6e-17;
+    atom.SD_He_cross_section = 9.0e-24;
+    atom.SD_Xe_cross_section = 2.0e-19;
+    atom.SD_N2_cross_section = 1.0e-22;
 end

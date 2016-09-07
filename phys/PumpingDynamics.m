@@ -10,8 +10,11 @@ function dynamics = PumpingDynamics( atom, beam, condition, tmin, tmax, dt, init
 
     % relaxation rate
     rate = SelfSERate(atom, condition);
-
-
+    
+    %spin damping process
+    Drate = DampingRate(atom, condition);
+    
+    SpinDamping = Sdamping(atom, eigen, Drate);
     %% Evolution
 
     population_projection=logical(atom.LS.cPg);
@@ -32,7 +35,7 @@ function dynamics = PumpingDynamics( atom, beam, condition, tmin, tmax, dt, init
         
         % evolution kernel
         exchange= SpinExchange( atom, eigen, rho, eigen.operators.S, rate);
-        G = eigen.G + pump.G + exchange.G;
+        G = eigen.G + pump.G + exchange.G + SpinDamping.G;
 
         % step forward - update observables
         rho1=expm(-dt*G)*rho; 
@@ -41,7 +44,7 @@ function dynamics = PumpingDynamics( atom, beam, condition, tmin, tmax, dt, init
         diff=norm(rho-rho1);
         t=t+dt; count=count+1;
         rho=rho1;
-        fprintf('evolution t = %5.2f microsecond.\n', t);
+        fprintf('evolution t = %5.2f microsecond.\n', t/(2*pi)); %\muS
     end
     tlist=tlist(1:count-1);
     rho_res=rho_res(:, 1:count-1);

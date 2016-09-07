@@ -15,12 +15,13 @@ Bmax=10000; %max B in Gauss
 nB=501; dB=linspace(0,Bmax,nB);
 Eg=zeros(nB, atom.sw.gg); Ee=zeros(nB, atom.sw.ge);
 for k=1:nB 
-    H=Hamiltonian(atom,dB(k));%Hamiltonian [uHg,uHe]
+    condition.magB=dB(k);
+    H=Hamiltonian(atom,condition);%Hamiltonian [uHg,uHe]
     eigVg=eigH(H.uHg);
     eigVe=eigH(H.uHe);
 
-    Eg(k,:)=eigVg.E * erg2GHz; %y axis for ground states %GHz
-    Ee(k,:)=eigVe.E * erg2GHz; %y axis for excited states %GHz
+    Eg(k,:)=eigVg.E*1e-3/(2*pi);% * erg2GHz; %y axis for ground states %GHz
+    Ee(k,:)=eigVe.E*1e-3/(2*pi);% * erg2GHz; %y axis for excited states %GHz
 end
 
 %% Example: Rb87 D1 line - weak field (anomalous Zeeman effect)

@@ -3,6 +3,6 @@ function [Eg, Gamma_g] = OpticalPumpingRate( effHg )
 %   Detailed explanation goes here
     [dim, ~]=size(effHg);
     Eg = real(trace(effHg)/dim);
-    Gamma_g= - imag(trace(effHg)/dim);
+    Gamma_g= - imag(trace(effHg)/dim)*2.0;
 end
 

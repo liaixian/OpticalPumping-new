@@ -15,21 +15,24 @@ condition.Gm2=2*pi* 20.0 * 1e9; % s^(-1), collisional broadening
 condition.temperature= 300.0;  % Kelvin
 condition.HighPressureApproximation=false;
 condition.density = 1e13; % cm^(-3)
+condition.He_density = 1e13;  %????
+condition.Xe_density = 1e13;  %????
+condition.N2_density = 1e13;  %????
 
 %% dynamics
-tmin=0; tmax=20e3; dt=200; 
+tmin=0; tmax=2*pi*1e3; dt=2*pi; 
 init_state=atom.LS.cPg/atom.sw.gg;
 dyn = PumpingDynamics( atom, beam, condition, tmin, tmax, dt, init_state );
 
 %% plot result
 subplot(1, 2, 1);
-plot(dyn.time/1e3,dyn.state, 'd-');
+plot(dyn.time/1e3/(2*pi),dyn.state, 'd-');
 xlabel('Time (ms)')
 ylabel('Sublevel populations')
 legend('2,2','2,1','2,0','2,-1','2,-2','1,-1','1,0','1,1')
 
 subplot(1, 2, 2);
-plot(dyn.time/1e3,dyn.observables.spin, 'd-');
+plot(dyn.time/1e3/(2*pi),dyn.observables.spin, 'd-');
 xlabel('Time (ms)')
 ylabel('Spin')
 legend('Sx', 'Sy', 'Sz')
